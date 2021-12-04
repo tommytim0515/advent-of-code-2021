@@ -16,12 +16,12 @@ def get_inputs(filename: str) -> Tuple[List[int], np.ndarray]:
 
 def bingo_subsystem_win_first(seq: List[int], matrices: np.ndarray) -> int:
     for num in seq:
-        for i in range(len(matrices)):
-            coors = np.argwhere(matrices[i] == num)
-            for coor in coors:
-                matrices[i][coor[0], coor[1]] = -1
-                if np.sum(matrices[i][coor[0]]) == -5 or np.sum(matrices[i][:, coor[1]]) == -5:
-                    return num * np.sum(matrices[i][matrices[i] != -1])
+        coors = np.argwhere(matrices == num)
+        for coor in coors:
+            matrices[coor[0], coor[1], coor[2]] = -1
+            if np.sum(matrices[coor[0], coor[1]]) == -5 \
+                    or np.sum(matrices[coor[0], :, coor[2]]) == -5:
+                return num * np.sum(matrices[coor[0]][matrices[coor[0]] != -1])
     return 0
 
 
@@ -29,14 +29,15 @@ def bingo_subsystem_win_last(seq: List[int], matrices: np.ndarray) -> int:
     wins = set()
     res = 0
     for num in seq:
-        for i in range(len(matrices)):
-            coors = np.argwhere(matrices[i] == num)
-            for coor in coors:
-                matrices[i][coor[0], coor[1]] = -1
-                if np.sum(matrices[i][coor[0]]) == -5 or np.sum(matrices[i][:, coor[1]]) == -5:
-                    if i not in wins:
-                        wins.add(i)
-                        res = num * np.sum(matrices[i][matrices[i] != -1])
+        coors = np.argwhere(matrices == num)
+        for coor in coors:
+            matrices[coor[0], coor[1], coor[2]] = -1
+            if np.sum(matrices[coor[0], coor[1]]) == -5 \
+                    or np.sum(matrices[coor[0], :, coor[2]]) == -5:
+                if coor[0] in wins:
+                    continue
+                wins.add(coor[0])
+                res = num * np.sum(matrices[coor[0]][matrices[coor[0]] != -1])
     return res
 
 
