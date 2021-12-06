@@ -29,7 +29,21 @@ def lanternfish_iteration_optimized(fish_list: List[int], days: int) -> int:
         iter_list[6] += addition
     return sum(iter_list)
 
+def lanternfish_iteration_legend(fish_list: List[int], days: int) -> int:
+    iter_list = [0 for _ in range(9)]
+    for fish in fish_list:
+        iter_list[fish] += 1
+    idx = 0
+    for _ in range(days):
+        addition = iter_list[idx]
+        idx += 1
+        if idx == 9:
+            idx = 0
+        iter_list[(idx+8) % 9] = addition
+        iter_list[(idx+6) % 9] += addition
+    return sum(iter_list)
 
 if __name__ == '__main__':
     fish_list = get_inputs('input.txt')
     print(lanternfish_iteration_optimized(fish_list, 256))
+    print(lanternfish_iteration_legend(fish_list, 256))
