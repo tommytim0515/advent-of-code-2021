@@ -1,3 +1,4 @@
+import sys
 import statistics
 from typing import List
 
@@ -24,7 +25,7 @@ def minimum_cost_alignment_modified(crab_list: List[int]) -> int:
     min_val = min(crab_list)
     max_val = max(crab_list)
     # cost is the maximum integer
-    cost = 2 ** 31 - 1
+    cost = sys.maxsize
     pivot = 0
     for i in range(min_val, max_val + 1):
         if alignment_cost(crab_list, i) < cost:
@@ -32,6 +33,10 @@ def minimum_cost_alignment_modified(crab_list: List[int]) -> int:
             pivot = i
     print(f'Pivot: {pivot}')
     return cost
+
+def minimum_cost_alignment_gradient_descent(crab_list: List[int]) -> int:
+    # Initialize pivot
+    pass
 
 if __name__ == '__main__':
     crab_list = get_inputs('input.txt')
