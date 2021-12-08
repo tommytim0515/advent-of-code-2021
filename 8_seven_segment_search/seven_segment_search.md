@@ -113,7 +113,7 @@ So, the unique signal patterns would correspond to the following digits:
 - eafb: 4
 - cagedb: 0
 - ab: 1
- 
+
 Then, the four digits of the output value can be decoded:
 
 - cdfeb: 5

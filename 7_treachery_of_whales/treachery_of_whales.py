@@ -20,7 +20,7 @@ def minimum_cost_alignment(crab_list: List[int]) -> int:
     for crab in crab_list:
         cost += abs(crab - median)
     return cost
-
+    
 def minimum_cost_alignment_modified(crab_list: List[int]) -> int:
     min_val = min(crab_list)
     max_val = max(crab_list)
@@ -35,8 +35,10 @@ def minimum_cost_alignment_modified(crab_list: List[int]) -> int:
     return cost
 
 def minimum_cost_alignment_gradient_descent(crab_list: List[int]) -> int:
-    # Initialize pivot
-    pass
+    min_val = min(crab_list)
+    max_val = max(crab_list)
+
+    
 
 if __name__ == '__main__':
     crab_list = get_inputs('input.txt')
