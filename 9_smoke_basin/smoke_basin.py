@@ -54,14 +54,15 @@ def multiplication_of_three_largest_basins(map_data: List[List[int]]) -> int:
     top_three: List[int] = []
     for i in range(len(map_data)):
         for j in range(len(map_data[i])):
-            if map_data[i][j] != -1:
-                size_basin = tag_basin(map_data, i, j)
-                if len(top_three) < 3:
-                    top_three.append(size_basin)
-                else:
-                    top_three = sorted(top_three)
-                    if size_basin > top_three[0]:
-                        top_three[0] = size_basin
+            if map_data[i][j] != 0:
+                continue
+            size_basin = tag_basin(map_data, i, j)
+            if len(top_three) < 3:
+                top_three.append(size_basin)
+            else:
+                top_three = sorted(top_three)
+                if size_basin > top_three[0]:
+                    top_three[0] = size_basin
     return math.prod(top_three)
 
 
