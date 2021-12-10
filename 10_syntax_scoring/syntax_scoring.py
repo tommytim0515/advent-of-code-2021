@@ -44,19 +44,20 @@ def syntax_error_score(lines: List[str]) -> int:
                     stack.pop()
                 else:
                     stack.append(char)
-        if len(stack) > 0:
-            set_stack = set(stack)
-            if len(set_stack.intersection(SET_NOTATIONS)) == 0:
-                continue
-            wrong_notations = list(set_stack.intersection(SET_NOTATIONS))
-            min_idx = len(stack)
-            wrong_notation = wrong_notations[0]
-            for notation in wrong_notations:
-                idx = stack.index(notation)
-                if idx < min_idx:
-                    min_idx = idx
-                    wrong_notation = notation
-            score += WRONG_NOTATION_SCORE[wrong_notation]
+        if len(stack) == 0:
+            continue
+        set_stack = set(stack)
+        if len(set_stack.intersection(SET_NOTATIONS)) == 0:
+            continue
+        wrong_notations = list(set_stack.intersection(SET_NOTATIONS))
+        min_idx = len(stack)
+        wrong_notation = wrong_notations[0]
+        for notation in wrong_notations:
+            idx = stack.index(notation)
+            if idx < min_idx:
+                min_idx = idx
+                wrong_notation = notation
+        score += WRONG_NOTATION_SCORE[wrong_notation]
     return score
 
 
@@ -72,19 +73,20 @@ def fix_incomplete(lines: List[str]) -> int:
                     stack.pop()
                 else:
                     stack.append(char)
-        if len(stack) > 0:
-            set_stack = set(stack)
-            if len(set_stack.intersection(SET_NOTATIONS)) != 0:
-                continue
-            addition = []
-            for i in range(len(stack)-1, -1, -1):
-                char = stack[i]
-                addition.append(NOTATION_MAPPING[char])
-            score = 0
-            for char in addition:
-                score *= 5
-                score += COMPLETE_SCORE[char]
-            scores.append(score)
+        if len(stack) == 0:
+            continue
+        set_stack = set(stack)
+        if len(set_stack.intersection(SET_NOTATIONS)) != 0:
+            continue
+        addition = []
+        for i in range(len(stack)-1, -1, -1):
+            char = stack[i]
+            addition.append(NOTATION_MAPPING[char])
+        score = 0
+        for char in addition:
+            score *= 5
+            score += COMPLETE_SCORE[char]
+        scores.append(score)
     return int(statistics.median(scores))
 
 
