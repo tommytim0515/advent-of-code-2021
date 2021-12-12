@@ -28,36 +28,33 @@ def get_inputs(filename: str) -> Tuple[List[List[int]], List[str]]:
 def get_num_paths(vertices: List[List[int]], points: List[str], point: str, visited: Set) -> int:
     if point == END_NOTATION:
         return 1
-    idx = points.index(point)
     if point.islower():
         visited.add(point)
     num_paths = 0
+    idx = points.index(point)
     for i in range(len(vertices[idx])):
         if vertices[idx][i] == 1 and points[i] not in visited:
-            new_visited = visited.copy()
             num_paths += get_num_paths(vertices,
-                                       points, points[i], new_visited)
+                                       points, points[i], visited.copy())
     return num_paths
 
 
 def get_num_paths_pro(vertices: List[List[int]], points: List[str], point: str, visited: Set, used: bool) -> int:
     if point == END_NOTATION:
         return 1
-    idx = points.index(point)
     if point.islower():
         visited.add(point)
     num_paths = 0
+    idx = points.index(point)
     for i in range(len(vertices[idx])):
-        if vertices[idx][i] == 1:
-            if points[i] not in visited:
-                new_visited = visited.copy()
-                num_paths += get_num_paths_pro(vertices,
-                                               points, points[i], new_visited, used)
-            elif points[i] in visited and not used \
-                    and points[i] != START_NOTATION and points[i] != END_NOTATION:
-                new_visited = visited.copy()
-                num_paths += get_num_paths_pro(vertices,
-                                               points, points[i], new_visited, True)
+        if vertices[idx][i] == 0:
+            continue
+        if points[i] not in visited:
+            num_paths += get_num_paths_pro(vertices,
+                                           points, points[i], visited.copy(), used)
+        elif not used and points[i] != START_NOTATION and points[i] != END_NOTATION:
+            num_paths += get_num_paths_pro(vertices,
+                                           points, points[i], visited.copy(), True)
     return num_paths
 
 
@@ -66,5 +63,7 @@ if __name__ == '__main__':
     for line in vertices:
         print(line)
     print(points)
-    print(get_num_paths(vertices, points, 'start', set()))
-    print(get_num_paths_pro(vertices, points, 'start', set(), False))
+    print('Number of paths: {}'.format(
+        get_num_paths(vertices, points, 'start', set())))
+    print('Number of paths pro: {}'.format(
+        get_num_paths_pro(vertices, points, 'start', set(), False)))
