@@ -109,25 +109,33 @@ func getCode(points [][]int, folds [][]int) [][]rune {
 	}
 	var (
 		maxX int
+		minX int
 		maxY int
+		minY int
 	)
 	for _, point := range pointList {
 		if point[0] > maxX {
 			maxX = point[0]
 		}
+		if point[0] < minX {
+			minX = point[0]
+		}
 		if point[1] > maxY {
 			maxY = point[1]
 		}
+		if point[1] < minY {
+			minY = point[1]
+		}
 	}
 	matrix := make([][]rune, maxY+1)
-	for i := 0; i < maxY+1; i++ {
-		matrix[i] = make([]rune, maxX+1)
+	for i := 0; i < maxY-minY+1; i++ {
+		matrix[i] = make([]rune, maxX-minX+1)
 		for j := 0; j < maxX+1; j++ {
-			matrix[i][j] = ' '
+			matrix[i+minY][j+minY] = ' '
 		}
 	}
 	for _, point := range pointList {
-		matrix[point[1]][point[0]] = '#'
+		matrix[point[1]+minY][point[0]+minX] = '#'
 	}
 	return matrix
 }

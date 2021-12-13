@@ -15,9 +15,9 @@ def get_inputs(file_name: str) -> Tuple[List[Tuple[int, ...]], List[Tuple[int, .
         while idx < len(data):
             segments = data[idx].strip().split('=')
             if 'x' in data[idx]:
-                folds.append(tuple([0, int(segments[-1])])) # 'x'
+                folds.append(tuple([0, int(segments[-1])]))  # 'x'
             else:
-                folds.append(tuple([1, int(segments[-1])])) # 'y'
+                folds.append(tuple([1, int(segments[-1])]))  # 'y'
             idx += 1
         return points, folds
 
@@ -57,10 +57,13 @@ def get_code(points: List[Tuple[int, ...]], folds: List[Tuple[int, ...]]) -> Lis
                     set_points.add(point)
         list_points = list(set_points)
     max_x = max([point[0] for point in list_points])
+    min_x = min([point[0] for point in list_points])
     max_y = max([point[1] for point in list_points])
-    matrix = [[' ' for _ in range(max_x+1)] for _ in range(max_y+1)]
+    min_y = min([point[1] for point in list_points])
+    matrix = [[' ' for _ in range(max_x-min_x+1)]
+              for _ in range(max_y-min_y+1)]
     for point in list_points:
-        matrix[point[1]][point[0]] = '#'
+        matrix[point[1]+min_y][point[0]+min_x] = '#'
     return matrix
 
 
