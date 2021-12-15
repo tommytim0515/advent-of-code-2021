@@ -1,5 +1,6 @@
 import sys
-from queue import PriorityQueue, Queue
+import numpy as np
+from queue import PriorityQueue
 from typing import List, Tuple
 
 NEIGHBORS = ((-1, 0), (1, 0), (0, -1), (0, 1))
@@ -11,12 +12,6 @@ def get_inputs(filename: str) -> List[List[int]]:
         return [[int(x) for x in line.strip()] for line in lines]
 
 
-def get_risk(dijkstra_matrix: List[List[int]], i: int, j: int) -> int:
-    if i < 0 or j < 0 or i >= len(dijkstra_matrix) or j >= len(dijkstra_matrix[0]):
-        return sys.maxsize
-    return dijkstra_matrix[i][j]
-
-
 def lowest_total_risk(risk_map: List[List[int]]) -> int:
     if len(risk_map) == 0:
         return 0
@@ -26,7 +21,7 @@ def lowest_total_risk(risk_map: List[List[int]]) -> int:
         [sys.maxsize for _ in range(num_cols)] for _ in range(num_rows)]
     dijkstra_matrix[0][0] = 0
     visited = set()
-    pq: Queue[Tuple[int, int, int]] = PriorityQueue()
+    pq: PriorityQueue[Tuple[int, int, int]] = PriorityQueue()
     pq.put((0, 0, 0))
     while not pq.empty():
         if (num_rows-1, num_cols-1) in visited:
@@ -68,9 +63,9 @@ def compute_full_map(original_map: List[List[int]]) -> List[List[int]]:
 
 def main() -> None:
     risk_map = get_inputs('input.txt')
-    print(lowest_total_risk(risk_map))
+    print(f'Original map: {lowest_total_risk(risk_map)}')
     new_map = compute_full_map(risk_map)
-    print(lowest_total_risk(new_map))
+    print(f'Full map: {lowest_total_risk(new_map)}')
 
 
 if __name__ == '__main__':
