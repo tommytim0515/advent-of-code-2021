@@ -19,12 +19,12 @@ def pair_insertion(polymer: str, rules: Dict[str, str], steps: int) -> int:
             new_polymer += (polymer[i] + rules[polymer[i:i+2]])
         new_polymer += polymer[-1]
         polymer = new_polymer
-        char_counts: Dict[str, int] = {}
-        for c in polymer:
-            if c in char_counts:
-                char_counts[c] += 1
-            else:
-                char_counts[c] = 1
+    char_counts: Dict[str, int] = {}
+    for c in polymer:
+        if c in char_counts:
+            char_counts[c] += 1
+        else:
+            char_counts[c] = 1
     return max(char_counts.values()) - min(char_counts.values())
 
 
@@ -44,7 +44,7 @@ def pair_insertion_optimized(polymer: str, rules: Dict[str, str], steps: int) ->
     for _ in range(steps):
         new_pattern_dict: Dict[str, int] = {}
         for key, value in pattern_dict.items():
-            if pattern_dict[key] < 1:
+            if value < 1:
                 continue
             if key not in rules:
                 if key in new_pattern_dict:
