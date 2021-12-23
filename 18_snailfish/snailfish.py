@@ -5,7 +5,7 @@ import math
 import os
 import utils
 
-from typing import List
+from typing import List, Optional
 
 
 class SFNumber:
@@ -42,7 +42,7 @@ class SFNumber:
         return output
 
     def _explode_one(self) -> bool:
-        stack:str = []
+        stack:List[object] = []
         index = 0
         depth = 0
         while index < len(self.number):
@@ -67,7 +67,7 @@ class SFNumber:
         return False
 
     def _split_one(self) -> bool:
-        stack:str = []
+        stack:List[object] = []
         index = 0
         while index < len(self.number):
             x = self.number[index]
@@ -121,7 +121,7 @@ class SFNumber:
         return magnitude.pop()
 
 
-def process_snail_list(numbers: List[str]) -> SFNumber:
+def process_snail_list(numbers: List[str]) -> Optional[SFNumber]:
     result_number = None
     for number in numbers:
         new_number = SFNumber(number)
